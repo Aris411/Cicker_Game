@@ -12,6 +12,7 @@ public class EnemyManager : MonoBehaviour
 
     public static EnemyManager instance;
 
+
     void Awake() {
         instance = this;
     }

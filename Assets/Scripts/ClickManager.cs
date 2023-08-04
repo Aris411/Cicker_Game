@@ -7,9 +7,9 @@ public class ClickManager : MonoBehaviour
 {
     public List <float> AutoClicker = new List<float>();
 
-    public int AutoClickerPrice = 10;
+    private int AutoClickerPrice = 10;
     public TextMeshProUGUI AutoClickerQuantity;
-    public int PlayerDamagePrice = 10;
+    private int PlayerDamagePrice = 10;
     public TextMeshProUGUI PlayerDamageQuantity;
 
 
