@@ -17,6 +17,7 @@ public class GameManager : MonoBehaviour
     private int LvL = 1;
     public TextMeshProUGUI StageText;
     private int MoneyToGive = 10;
+    private int BossHP = 100;
 
     void Awake() {
         instance = this;
@@ -74,5 +75,13 @@ public class GameManager : MonoBehaviour
 
     public int GetMoneyToGive(){
         return MoneyToGive;
+    }
+
+    public int GetBossHP(){
+        return BossHP;
+    }
+
+    public void DoubleBossHP(){
+        BossHP = BossHP * 2;
     }
 }

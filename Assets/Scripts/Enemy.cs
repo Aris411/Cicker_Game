@@ -14,9 +14,17 @@ public class Enemy : MonoBehaviour
 
 
     public void Start() {
+       if (GameManager.instance.GetDefeated() == 10)
+    {
+        curHp = GameManager.instance.GetBossHP();
+    }
+    else
+    {
         curHp = GameManager.instance.GetMaxHp();
-        HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
-        UpdateHPText();
+    }
+
+    HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
+    UpdateHPText();
     }
     public void DamageAuto() {
         curHp--;
@@ -42,6 +50,10 @@ public class Enemy : MonoBehaviour
         GameManager.instance.incrementDefeated();
         GameManager.instance.AddMoney(GameManager.instance.GetMoneyToGive());
         Debug.Log("Enemy Defeated " + GameManager.instance.GetDefeated());
+        if(GameManager.instance.GetDefeated() == 10){
+            curHp = GameManager.instance.GetBossHP();
+            Debug.Log("Boss fight");
+        }
         if(GameManager.instance.GetDefeated() == 11){
             LvLUp();
             GameManager.instance.SetDefeated(1);
@@ -54,6 +66,7 @@ public class Enemy : MonoBehaviour
     public void LvLUp(){
         GameManager.instance.doubleMaxHP();
         curHp = GameManager.instance.GetMaxHp();
+        GameManager.instance.DoubleBossHP();  
         GameManager.instance.DoubleMoneyToGive();
         HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
         GameManager.instance.incrementLvL();
