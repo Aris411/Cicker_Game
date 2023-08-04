@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour
     public int Money;
     public TextMeshProUGUI MoneyText;
     public static GameManager instance;
+    public int ClickPower = 1;
 
     void Awake() {
         instance = this;

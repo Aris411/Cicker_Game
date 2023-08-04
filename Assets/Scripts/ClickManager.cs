@@ -7,8 +7,11 @@ public class ClickManager : MonoBehaviour
 {
     public List <float> AutoClicker = new List<float>();
 
-    public int AutoClickerPrice;
+    public int AutoClickerPrice = 10;
     public TextMeshProUGUI AutoClickerQuantity;
+    public int PlayerDamagePrice = 10;
+    public TextMeshProUGUI PlayerDamageQuantity;
+
 
     void Update()
     {
@@ -16,17 +19,29 @@ public class ClickManager : MonoBehaviour
             // is it time to click
             if(Time.time - AutoClicker[i] >= 1){
                 AutoClicker[i] = Time.time;
-                EnemyManager.instance.CurEnemy.Damage();
+                EnemyManager.instance.CurEnemy.DamageAuto();
             }
         }
     }
 
     public void OnBuyAutoClicker(){
-        if(GameManager.instance.Money >+ AutoClickerPrice) {
+        if(GameManager.instance.Money >= AutoClickerPrice) {
             GameManager.instance.TakeMoney(AutoClickerPrice);
             AutoClicker.Add(Time.time);
+            AutoClickerPrice *= 2;
 
             AutoClickerQuantity.text = AutoClicker.Count.ToString();
         }
     }
+
+    public void OnBuyPlayerDmg(){
+        if(GameManager.instance.Money >= PlayerDamagePrice) {
+            GameManager.instance.TakeMoney(PlayerDamagePrice);
+            GameManager.instance.ClickPower++;
+            PlayerDamagePrice *= 2;
+
+            PlayerDamageQuantity.text = GameManager.instance.ClickPower.ToString();
+        }
+    }
+
 }

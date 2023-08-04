@@ -10,7 +10,7 @@ public class Enemy : MonoBehaviour
     public int MoneyToGive;
     public Image HealthbarFill;
 
-    public void Damage() {
+    public void DamageAuto() {
         curHp--;
         HealthbarFill.fillAmount = (float)curHp / (float)MaxHp;
 
@@ -19,10 +19,17 @@ public class Enemy : MonoBehaviour
         }
     }
 
+    public void Damage(){
+        curHp -= GameManager.instance.ClickPower;
+        HealthbarFill.fillAmount = (float)curHp / (float)MaxHp;
+
+        if (curHp <= 0) {
+            Defeated();
+        }
+    }
+
     public void Defeated(){
-        //Add Money
         GameManager.instance.AddMoney(MoneyToGive);
-        //Remove Enemy
         EnemyManager.instance.ReplaceEnemy(gameObject);
     }
 }
