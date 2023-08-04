@@ -25,7 +25,8 @@ public class EnemyManager : MonoBehaviour
     }
     // Replace Enemy
     public void ReplaceEnemy(GameObject Enemy){
-        Destroy(CurEnemy);
+        Destroy(Enemy);
         SpawnEnemy();
     }
+
 }
