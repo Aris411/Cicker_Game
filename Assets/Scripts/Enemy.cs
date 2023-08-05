@@ -23,12 +23,12 @@ public class Enemy : MonoBehaviour
         curHp = GameManager.instance.GetMaxHp();
     }
 
-    HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
+    UpdateHealthbar();
     UpdateHPText();
     }
     public void DamageAuto() {
         curHp--;
-        HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
+        UpdateHealthbar();
         UpdateHPText();
 
         if (curHp <= 0) {
@@ -38,7 +38,7 @@ public class Enemy : MonoBehaviour
 
     public void Damage(){
         curHp -= GameManager.instance.ClickPower;
-        HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
+        UpdateHealthbar();
         UpdateHPText();
 
         if (curHp <= 0) {
@@ -55,6 +55,8 @@ public class Enemy : MonoBehaviour
             Debug.Log("Boss fight");
         }
         if(GameManager.instance.GetDefeated() == 11){
+            GameManager.instance.AddMoney(GameManager.instance.GetBossMoneyToGive());
+            GameManager.instance.DoubleBossMoneyToGive();
             LvLUp();
             GameManager.instance.SetDefeated(1);
             Debug.Log("Defeated reset to" + GameManager.instance.GetDefeated());
@@ -73,9 +75,15 @@ public class Enemy : MonoBehaviour
         GameManager.instance.UpdateLvLText();
     }
 
-    private void UpdateHPText()
-    {
+    private void UpdateHPText(){
         HPText.text = curHp.ToString();
     }
     
+    private void UpdateHealthbar(){
+        if (GameManager.instance.GetDefeated() == 10) {
+            HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetBossHP();
+        } else {
+            HealthbarFill.fillAmount = (float)curHp / (float)GameManager.instance.GetMaxHp();
+        }
+    }
 }

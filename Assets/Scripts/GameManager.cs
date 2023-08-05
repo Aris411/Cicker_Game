@@ -7,7 +7,7 @@ using TMPro;
 public class GameManager : MonoBehaviour
 {
   
-    public int Money;
+    public double Money;
     public TextMeshProUGUI MoneyText;
     public static GameManager instance;
     public int ClickPower = 1;
@@ -18,6 +18,7 @@ public class GameManager : MonoBehaviour
     public TextMeshProUGUI StageText;
     private int MoneyToGive = 10;
     private int BossHP = 100;
+    private int BossMoneyToGive = 100;
 
     void Awake() {
         instance = this;
@@ -28,7 +29,7 @@ public class GameManager : MonoBehaviour
         MoneyText.text = Money.ToString();
     }
 
-    public void TakeMoney(int amount){
+    public void TakeMoney(double amount){
         Money -= amount;
         MoneyText.text = Money.ToString();
     }
@@ -83,5 +84,13 @@ public class GameManager : MonoBehaviour
 
     public void DoubleBossHP(){
         BossHP = BossHP * 2;
+    }
+
+    public void DoubleBossMoneyToGive(){
+        BossMoneyToGive = BossMoneyToGive * 2;
+    }
+
+    public int GetBossMoneyToGive(){
+        return BossMoneyToGive;
     }
 }

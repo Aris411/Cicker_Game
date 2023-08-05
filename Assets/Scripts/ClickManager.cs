@@ -7,12 +7,22 @@ public class ClickManager : MonoBehaviour
 {
     public List <float> AutoClicker = new List<float>();
 
-    private int AutoClickerPrice = 10;
+    private double AutoClickerPrice = 10;
+    private int AutoClickerAmount = 0;
     public TextMeshProUGUI AutoClickerQuantity;
-    private int PlayerDamagePrice = 10;
+    private double PlayerDamagePrice = 10;
     public TextMeshProUGUI PlayerDamageQuantity;
+    public TextMeshProUGUI AutoClickerPriceText;
+    public TextMeshProUGUI PlayerDamagePriceText;
 
 
+    void Start()
+    {
+        AutoClickerQuantity.text = "Auto Clicker Damage : " + AutoClickerAmount.ToString();
+        PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
+        AutoClickerPriceText.text = AutoClickerPrice.ToString();
+        PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
+    }
     void Update()
     {
         for(int i = 0; i < AutoClicker.Count; i++){
@@ -27,10 +37,11 @@ public class ClickManager : MonoBehaviour
     public void OnBuyAutoClicker(){
         if(GameManager.instance.Money >= AutoClickerPrice) {
             GameManager.instance.TakeMoney(AutoClickerPrice);
+            AutoClickerAmount++;
             AutoClicker.Add(Time.time);
-            AutoClickerPrice *= 2;
-
-            AutoClickerQuantity.text = AutoClicker.Count.ToString();
+            AutoClickerPrice = (int)(AutoClickerPrice * 1.25);
+            AutoClickerPriceText.text = AutoClickerPrice.ToString();
+            AutoClickerQuantity.text = "Auto Clicker Damage : " + AutoClicker.Count.ToString();
         }
     }
 
@@ -38,9 +49,12 @@ public class ClickManager : MonoBehaviour
         if(GameManager.instance.Money >= PlayerDamagePrice) {
             GameManager.instance.TakeMoney(PlayerDamagePrice);
             GameManager.instance.ClickPower++;
-            PlayerDamagePrice *= 2;
-
-            PlayerDamageQuantity.text = GameManager.instance.ClickPower.ToString();
+            if (GameManager.instance.ClickPower == 50){
+                GameManager.instance.ClickPower = GameManager.instance.ClickPower * 2;
+            }
+            PlayerDamagePrice = (int)(PlayerDamagePrice *1.25);
+            PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
+            PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
         }
     }
 
