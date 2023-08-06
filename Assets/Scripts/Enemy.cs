@@ -7,7 +7,7 @@ using TMPro;
 public class Enemy : MonoBehaviour
 {
     //private int MaxHp = 10;
-    private int curHp;
+    private double curHp;
     public Image HealthbarFill;
     public TextMeshProUGUI HPText;
     
@@ -26,8 +26,8 @@ public class Enemy : MonoBehaviour
     UpdateHealthbar();
     UpdateHPText();
     }
-    public void DamageAuto() {
-        curHp--;
+    public void DamageAuto(double damage) {
+        curHp -= damage;
         UpdateHealthbar();
         UpdateHPText();
 

@@ -223,7 +223,7 @@ GameObject:
   - component: {fileID: 4962317546260059709}
   - component: {fileID: 4962317546260059708}
   - component: {fileID: 4962317546260059711}
-  - component: {fileID: 3805868163423583511}
+  - component: {fileID: 442090814038439647}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -345,7 +345,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 1
---- !u!111 &3805868163423583511
+--- !u!111 &442090814038439647
 Animation:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -354,7 +354,7 @@ Animation:
   m_GameObject: {fileID: 4962317546260059681}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 262ef93777884f8439763ae43b76efb8, type: 2}
+  m_Animation: {fileID: 7400000, guid: 0ea0035ab2b77824484236deac892fa7, type: 2}
   m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -466,7 +466,7 @@ Animator:
   m_GameObject: {fileID: 4962317546518507795}
   m_Enabled: 1
   m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: a3e250e2c04770247972991a29393fc9, type: 2}
+  m_Controller: {fileID: 9100000, guid: a9f1aa4d21d62424ea50ea7e49305209, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -538,7 +538,7 @@ Animation:
   m_GameObject: {fileID: 4962317546518507795}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 7400000, guid: 0ea0035ab2b77824484236deac892fa7, type: 2}
+  m_Animation: {fileID: 0}
   m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1

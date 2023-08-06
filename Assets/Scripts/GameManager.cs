@@ -10,15 +10,17 @@ public class GameManager : MonoBehaviour
     public double Money;
     public TextMeshProUGUI MoneyText;
     public static GameManager instance;
-    public int ClickPower = 1;
+    public double ClickPower = 1;
     private int CountDefeated = 1;
-    private int MaxHp = 10;
+    private double MaxHp = 10;
     public TextMeshProUGUI LvLText;
     private int LvL = 1;
     public TextMeshProUGUI StageText;
     private int MoneyToGive = 10;
-    private int BossHP = 100;
+    private double BossHP = 100;
     private int BossMoneyToGive = 100;
+    private double AutoClicker1Damage = 0;
+    private double AutoClicker2Damage = 0;
 
     void Awake() {
         instance = this;
@@ -46,12 +48,12 @@ public class GameManager : MonoBehaviour
         CountDefeated = amount;
     }
 
-    public int GetMaxHp(){
+    public double GetMaxHp(){
         return MaxHp;
     }
 
     public void doubleMaxHP(){
-        MaxHp = MaxHp * 2;
+        MaxHp = (int)(MaxHp * 1.5);
     }
 
     public void incrementLvL(){
@@ -78,19 +80,35 @@ public class GameManager : MonoBehaviour
         return MoneyToGive;
     }
 
-    public int GetBossHP(){
+    public double GetBossHP(){
         return BossHP;
     }
 
     public void DoubleBossHP(){
-        BossHP = BossHP * 2;
+        BossHP = (int)(BossHP * 1.75);
     }
 
     public void DoubleBossMoneyToGive(){
-        BossMoneyToGive = BossMoneyToGive * 2;
+        BossMoneyToGive = (int)(BossMoneyToGive * 2);
     }
 
     public int GetBossMoneyToGive(){
         return BossMoneyToGive;
+    }
+
+    public void IncrementAutoClicker1Damage(){
+        AutoClicker1Damage++;
+    }
+
+    public double getAutoClicker1Damage(){
+        return (int)AutoClicker1Damage;
+    }
+
+    public void IncrementAutoClicker2Damage(){
+        AutoClicker2Damage += 10;
+    }
+
+    public double getAutoClicker2Damage(){
+        return (int)AutoClicker2Damage;
     }
 }
