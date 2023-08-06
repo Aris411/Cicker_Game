@@ -5,6 +5,8 @@ using TMPro;
 
 public class ClickManager : MonoBehaviour
 {
+    public static ClickManager instance;
+
     public TextMeshProUGUI PlayerDamageQuantity;
     public TextMeshProUGUI AutoClickerPriceText;
     public TextMeshProUGUI PlayerDamagePriceText;
@@ -22,8 +24,12 @@ public class ClickManager : MonoBehaviour
     private float AutoClicker2Timer = 1.0f;
     private double AutoClicker2Price = 80;
     public TextMeshProUGUI AutoClicker2PriceText;
+    private int AutpClicker2purchases = 0;
     public GameObject BuyAutoClicker2;
 
+    void Awake() {
+        instance = this;
+    }
     void Start()
     {
         PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
@@ -56,18 +62,30 @@ public class ClickManager : MonoBehaviour
             }
         }
     }
+    
 
     public void OnBuyPlayerDmg(){
         if(GameManager.instance.Money >= PlayerDamagePrice) {
             GameManager.instance.TakeMoney(PlayerDamagePrice);
             GameManager.instance.ClickPower++;
-            if (GameManager.instance.ClickPower == 50){
+            if (PlayerPurchased == 50){
                 GameManager.instance.ClickPower = GameManager.instance.ClickPower * 2;
+                PlayerPurchased = 0;
             }
-            PlayerDamagePrice = (int)(PlayerDamagePrice *1.25);
+            if (RebirthManager.instance.GetRebirthCount() >= 2){
+                PlayerDamagePrice = (int)(PlayerDamagePrice *1.1);
+            } else {
+                PlayerDamagePrice = (int)(PlayerDamagePrice *1.2);
+            }
             PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
             PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
             PlayerPurchased++;
+        
+            if (RebirthManager.instance.GetRebirthCount() >= 1){
+                GameManager.instance.ClickPower++;
+                PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
+                PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
+            }
         }
     }
 
@@ -75,9 +93,20 @@ public class ClickManager : MonoBehaviour
         if(GameManager.instance.Money >= AutoClicker1Price) {
             GameManager.instance.TakeMoney(AutoClicker1Price);
             GameManager.instance.IncrementAutoClicker1Damage();
-            AutoClicker1Price = (int)(AutoClicker1Price * 1.25);
+            if (RebirthManager.instance.GetRebirthCount() >= 4){
+                AutoClicker1Price = (int)(AutoClicker1Price * 1.125);
+            } else {
+            AutoClicker1Price = (int)(AutoClicker1Price * 1.2);
+            }
             AutoClicker1PriceText.text = AutoClicker1Price.ToString(); 
+            if (RebirthManager.instance.GetRebirthCount() >= 3){
+                GameManager.instance.IncrementAutoClicker1Damage();
+            }
             AutoClicker1purchases++;
+            if (AutoClicker1purchases == 50){
+                GameManager.instance.DoubleAutoClicker1Damage();
+                AutoClicker1purchases = 0;
+            }
             UpdateDpsText();
         }
     }
@@ -86,8 +115,20 @@ public class ClickManager : MonoBehaviour
         if(GameManager.instance.Money >= AutoClicker2Price) {
             GameManager.instance.TakeMoney(AutoClicker2Price);
             GameManager.instance.IncrementAutoClicker2Damage();
-            AutoClicker2Price = (int)(AutoClicker2Price * 1.35);
-            AutoClicker2PriceText.text = AutoClicker2Price.ToString(); 
+            if (RebirthManager.instance.GetRebirthCount() >= 4){
+                AutoClicker2Price = (int)(AutoClicker2Price * 1.125);
+            } else {
+            AutoClicker2Price = (int)(AutoClicker2Price * 1.25);
+            }
+            if (RebirthManager.instance.GetRebirthCount() >= 3){
+                GameManager.instance.IncrementAutoClicker2Damage();
+            }
+            AutoClicker2PriceText.text = AutoClicker2Price.ToString();
+            AutpClicker2purchases++;
+            if(AutpClicker2purchases == 50){
+                GameManager.instance.DoubleAutpClicker2Damage();
+                AutpClicker2purchases = 0;
+            }
             UpdateDpsText();
         }
     }
@@ -99,5 +140,21 @@ public class ClickManager : MonoBehaviour
     public void upadteShopText(){
         AutoClickerPriceText.text = AutoClicker1Price.ToString();
         AutoClicker2PriceText.text = AutoClicker2Price.ToString();
+    }
+
+    public void ResetClickManager(){
+        PlayerDamagePrice = 10;
+        PlayerPurchased = 0;
+        AutoClicker1Timer = 1.0f;
+        AutoClicker1Price = 10;
+        AutoClicker1purchases = 0;
+        AutoClicker2Timer = 1.0f;
+        AutoClicker2Price = 80;
+        PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
+        PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
+        UpdateDpsText();
+        upadteShopText();
+        BuyAutoClicker2.SetActive(false);
+        BuyAutoClicker1.SetActive(false);
     }
 }

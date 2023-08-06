@@ -6,19 +6,22 @@ using TMPro;
 
 public class GameManager : MonoBehaviour
 {
-  
+    public static GameManager instance;
+
     public double Money;
     public TextMeshProUGUI MoneyText;
-    public static GameManager instance;
-    public double ClickPower = 1;
+    
     private int CountDefeated = 1;
-    private double MaxHp = 10;
-    public TextMeshProUGUI LvLText;
     private int LvL = 1;
     public TextMeshProUGUI StageText;
+    public TextMeshProUGUI LvLText;
+
+    private double MaxHp = 10;
     private int MoneyToGive = 10;
     private double BossHP = 100;
     private int BossMoneyToGive = 100;
+    
+    public double ClickPower = 1;
     private double AutoClicker1Damage = 0;
     private double AutoClicker2Damage = 0;
 
@@ -53,7 +56,7 @@ public class GameManager : MonoBehaviour
     }
 
     public void doubleMaxHP(){
-        MaxHp = (int)(MaxHp * 1.5);
+        MaxHp = (int)(MaxHp * 1.75);
     }
 
     public void incrementLvL(){
@@ -72,6 +75,10 @@ public class GameManager : MonoBehaviour
         StageText.text = CountDefeated.ToString();
     }
 
+    public void UpdateMoneyText(){
+        MoneyText.text = Money.ToString();
+    }
+
     public void DoubleMoneyToGive(){
         MoneyToGive = MoneyToGive * 2;
     }
@@ -85,7 +92,10 @@ public class GameManager : MonoBehaviour
     }
 
     public void DoubleBossHP(){
-        BossHP = (int)(BossHP * 1.75);
+        if (LvL == 10 || LvL == 20 || LvL == 30 || LvL == 40){
+            BossHP = (int)(BossHP * 2);
+        }
+        BossHP = (int)(BossHP * 1.4);
     }
 
     public void DoubleBossMoneyToGive(){
@@ -110,5 +120,29 @@ public class GameManager : MonoBehaviour
 
     public double getAutoClicker2Damage(){
         return (int)AutoClicker2Damage;
+    }
+
+    public void DoubleAutoClicker1Damage(){
+        AutoClicker1Damage = (int)(AutoClicker1Damage * 2);
+    }  
+
+    public void DoubleAutpClicker2Damage(){
+        AutoClicker2Damage = (int)(AutoClicker2Damage * 2);
+    }
+
+    public void ResetGameManager(){
+        Money = 0;
+        ClickPower = 1;
+        CountDefeated = 1;
+        MaxHp = 10;
+        LvL = 1;
+        MoneyToGive = 10;
+        BossHP = 100;
+        BossMoneyToGive = 100;
+        AutoClicker1Damage = 0;
+        AutoClicker2Damage = 0;
+        UpdateLvLText();
+        UpdateStageText();
+        UpdateMoneyText();
     }
 }
