@@ -14,6 +14,7 @@ public class ClickManager : MonoBehaviour
 
     private double PlayerDamagePrice = 10;
     private int PlayerPurchased = 0;
+    public GameObject PlayerButton;
 
     private float AutoClicker1Timer = 1.0f;
     private double AutoClicker1Price = 10;
@@ -38,6 +39,7 @@ public class ClickManager : MonoBehaviour
         upadteShopText();
         BuyAutoClicker2.SetActive(false);
         BuyAutoClicker1.SetActive(false);
+        hidePlayerButton();
     }
     void Update()
     {
@@ -156,5 +158,13 @@ public class ClickManager : MonoBehaviour
         upadteShopText();
         BuyAutoClicker2.SetActive(false);
         BuyAutoClicker1.SetActive(false);
+    }
+
+    public void hidePlayerButton(){
+        PlayerButton.SetActive(false);
+    }
+
+    public void showPlayerButton(){
+        PlayerButton.SetActive(true);
     }
 }

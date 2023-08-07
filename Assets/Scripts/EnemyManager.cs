@@ -9,6 +9,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject [] EnemyPrefabsLvL1;
     public GameObject [] EnemyPrefabsLvL5;
 
+    public GameObject [] MiniBossPrefabs;
     public GameObject [] BossPrefabs;
 
     public Enemy CurEnemy;
@@ -25,13 +26,18 @@ public class EnemyManager : MonoBehaviour
 
     void Start()
     {
-        SpawnEnemy();
+        BossTimerFill.gameObject.SetActive(false);
+        BossTimerText.gameObject.SetActive(false); 
+        //SpawnEnemy();
     }
     void Awake() {
         instance = this;
     }
 
     void Update(){
+        if (CurEnemy == null){
+
+        } else {
          if (isBossTimerActive)
     {
         currentBossTimer -= Time.deltaTime;
@@ -58,6 +64,7 @@ public class EnemyManager : MonoBehaviour
         }
     }
     }
+    }
     // Spawn Enemy
     public void SpawnEnemy(){
         if (GameManager.instance.GetDefeated() == 10) {
@@ -71,7 +78,7 @@ public class EnemyManager : MonoBehaviour
             currentBossTimer = maxBossTimer;
             isBossTimerActive = true;
         } 
-        if (GameManager.instance.GetLvL() <= 4 && GameManager.instance.GetDefeated() < 10){
+        if (GameManager.instance.GetLvL() <= 10 && GameManager.instance.GetDefeated() < 10){
             GameObject EnemyToSpawn = EnemyPrefabsLvL1[Random.Range(0, EnemyPrefabsLvL1.Length)];
             GameObject obj = Instantiate(EnemyToSpawn, canvas);
             CurEnemy = obj.GetComponent<Enemy>();
@@ -79,7 +86,7 @@ public class EnemyManager : MonoBehaviour
             BossTimerFill.gameObject.SetActive(false);
             BossTimerText.gameObject.SetActive(false);
         }
-        if (GameManager.instance.GetLvL() >= 5 && GameManager.instance.GetDefeated() < 10) {
+        if (GameManager.instance.GetLvL() >= 11 && GameManager.instance.GetDefeated() < 10) {
             GameObject EnemyToSpawn = EnemyPrefabsLvL5[Random.Range(0, EnemyPrefabsLvL5.Length)];
             GameObject obj = Instantiate(EnemyToSpawn, canvas);
             CurEnemy = obj.GetComponent<Enemy>();
@@ -92,6 +99,14 @@ public class EnemyManager : MonoBehaviour
     public void ReplaceEnemy(GameObject Enemy){
         Destroy(Enemy);
         SpawnEnemy();
+    }
+
+    public void DestroyEnemy(GameObject Enemy){
+        Destroy(Enemy);
+    }
+
+    public GameObject GetEnemy(){
+        return CurEnemy.gameObject;
     }
 
 }

@@ -34,11 +34,18 @@ public class RebirthManager : MonoBehaviour
     }
 
     public void Rebirth()
-    {
+    {  
+        GameObject currentEnemy = EnemyManager.instance.GetEnemy();
+        if (currentEnemy != null)
+        {
+            Destroy(currentEnemy);
+        }
         rebirthCount++;
         Debug.Log("Rebirth Count: " + rebirthCount);
         ClickManager.instance.ResetClickManager();
         GameManager.instance.ResetGameManager();
+        TextManager.instance.showText(rebirthCount);
+        ClickManager.instance.hidePlayerButton();
         //EnemyManager.instance.SpawnEnemy();
     }
 
