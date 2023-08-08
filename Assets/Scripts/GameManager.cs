@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
 
     public double Money;
     public TextMeshProUGUI MoneyText;
+    public GameObject GeneralText;
     
     private int CountDefeated = 1;
     private int LvL = 1;
@@ -30,8 +31,11 @@ public class GameManager : MonoBehaviour
     public SaveManager saveManager = SaveManager.instance;
     public GameObject LoadButton;
     public GameObject NewGameButton;
+    public GameObject SaveButton;
 
     private void Start() {
+        GeneralText.SetActive(false);
+        SaveButton.SetActive(false);
     }
 
     public void SaveGame(){
@@ -44,6 +48,7 @@ public class GameManager : MonoBehaviour
         saveData.CopyFrom(loadedData);
         SetGame(saveData);
         LoadButton.SetActive(false);
+        SaveButton.SetActive(true);
     }
 
     private void Update() {
@@ -219,6 +224,8 @@ public class GameManager : MonoBehaviour
 
         RebirthManager.instance.SetRebirthCount(save.GetRebirthCount());
 
+        GeneralText.SetActive(true);
+
         SetPlayerDamage(save.GetClickPower());
         SetAutoClicker1Damage(save.GetAutoClicker1Damage());
         SetAutoClicker2Damage(save.GetAutoClicker2Damage());
@@ -239,6 +246,8 @@ public class GameManager : MonoBehaviour
         LoadButton.SetActive(false);
         TextManager.instance.TextBox.SetActive(false);
         ClickManager.instance.PlayerButton.SetActive(true);
+        
+        TextManager.instance.fillText();
     }
 
     public void NewGame(){

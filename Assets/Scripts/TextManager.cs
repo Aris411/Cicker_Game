@@ -34,6 +34,8 @@ public class TextManager : MonoBehaviour
         TextBox.SetActive(false);
         EnemyManager.instance.SpawnEnemy();
         ClickManager.instance.showPlayerButton();
+        GameManager.instance.GeneralText.SetActive(true);
+        GameManager.instance.SaveButton.SetActive(true);
     }
 }
 
