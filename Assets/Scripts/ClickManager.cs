@@ -136,10 +136,12 @@ public class ClickManager : MonoBehaviour
     }
 
     public void UpdateDpsText(){
+        PlayerDamageQuantity.text = "Click Damage: " + GameManager.instance.ClickPower.ToString();
         DpsText.text = "DPS: " + (GameManager.instance.getAutoClicker1Damage() + GameManager.instance.getAutoClicker2Damage()).ToString();
     }
 
     public void upadteShopText(){
+        PlayerDamagePriceText.text = PlayerDamagePrice.ToString();
         AutoClickerPriceText.text = AutoClicker1Price.ToString();
         AutoClicker2PriceText.text = AutoClicker2Price.ToString();
     }
@@ -166,5 +168,61 @@ public class ClickManager : MonoBehaviour
 
     public void showPlayerButton(){
         PlayerButton.SetActive(true);
+    }
+
+    public int GetPlayerPurchased(){
+        return PlayerPurchased;
+    }
+
+    public double GetPlayerDamagePrice(){
+        return PlayerDamagePrice;
+    }
+
+    public int GetAutoClicker1purchases(){
+        return AutoClicker1purchases;
+    }
+
+    public double GetAutoClicker1Price(){
+        return AutoClicker1Price;
+    }
+
+    public int GetAutpClicker2purchases(){
+        return AutpClicker2purchases;
+    }
+
+    public double GetAutoClicker2Price(){
+        return (int)AutoClicker2Price;
+    }
+    
+    public void SetPlayerDamageprice(double price){
+        PlayerDamagePrice = price;
+    }
+    
+    public void SetPlayerPurchased(int purchased){
+        PlayerPurchased = purchased;
+    }
+
+    public void SetAutoClicker1Price(double price){
+        AutoClicker1Price = price;
+    }
+
+    public void SetAutoClicker1purchases(int purchased){
+        AutoClicker1purchases = purchased;
+    }
+
+    public void SetAutoClicker2Price(double price){
+        AutoClicker2Price = price;
+    }
+
+    public void SetAutpClicker2purchases(int purchased){
+        AutpClicker2purchases = purchased;
+    }
+
+    public void SetPlayerDamagePrice(double price){
+        PlayerDamagePrice = price;
+    }
+
+    public void SetAutoClicker2purchases(int purchased){
+        AutpClicker2purchases = purchased;
     }
 }

@@ -13,6 +13,7 @@ public class EnemyManager : MonoBehaviour
     public GameObject [] BossPrefabs;
 
     public Enemy CurEnemy;
+    private bool isDead = false;
 
     public Transform canvas;
 
@@ -67,6 +68,7 @@ public class EnemyManager : MonoBehaviour
     }
     // Spawn Enemy
     public void SpawnEnemy(){
+        isDead = true;
         if (GameManager.instance.GetDefeated() == 10) {
             GameObject BossToSpawn = BossPrefabs[Random.Range(0, BossPrefabs.Length)];
             GameObject obj = Instantiate(BossToSpawn, canvas);
@@ -77,6 +79,7 @@ public class EnemyManager : MonoBehaviour
             BossTimerText.gameObject.SetActive(true);
             currentBossTimer = maxBossTimer;
             isBossTimerActive = true;
+            isDead = false;
         } 
         if (GameManager.instance.GetLvL() <= 10 && GameManager.instance.GetDefeated() < 10){
             GameObject EnemyToSpawn = EnemyPrefabsLvL1[Random.Range(0, EnemyPrefabsLvL1.Length)];
@@ -85,6 +88,7 @@ public class EnemyManager : MonoBehaviour
 
             BossTimerFill.gameObject.SetActive(false);
             BossTimerText.gameObject.SetActive(false);
+            isDead = false;
         }
         if (GameManager.instance.GetLvL() >= 11 && GameManager.instance.GetDefeated() < 10) {
             GameObject EnemyToSpawn = EnemyPrefabsLvL5[Random.Range(0, EnemyPrefabsLvL5.Length)];
@@ -93,6 +97,7 @@ public class EnemyManager : MonoBehaviour
 
             BossTimerFill.gameObject.SetActive(false);
             BossTimerText.gameObject.SetActive(false);
+            isDead = false;
         }
     }
     // Replace Enemy
@@ -109,4 +114,7 @@ public class EnemyManager : MonoBehaviour
         return CurEnemy.gameObject;
     }
 
+    public bool GetIsDead(){
+        return isDead;
+    }
 }

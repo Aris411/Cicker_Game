@@ -18,8 +18,6 @@ public class TextManager : MonoBehaviour
     }
 
     void Start(){
-        fillText();
-        showText(0);
     }
 
     public void fillText(){

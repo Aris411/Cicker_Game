@@ -54,6 +54,11 @@ public class RebirthManager : MonoBehaviour
         return rebirthCount;
     }
 
+    public void SetRebirthCount(int count)
+    {
+        rebirthCount = count;
+    }
+
     // Rebirth 1 = 2x Click Damage
     // Rebirth 2 = 0.5x Clicker Damage Price   
     // Rebirth 3 = 2x Auto Clicker Damage

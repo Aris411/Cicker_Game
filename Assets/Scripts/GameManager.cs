@@ -15,6 +15,7 @@ public class GameManager : MonoBehaviour
     private int LvL = 1;
     public TextMeshProUGUI StageText;
     public TextMeshProUGUI LvLText;
+    public GameObject DisplayText;
 
     private double MaxHp = 10;
     private int MoneyToGive = 10;
@@ -25,8 +26,34 @@ public class GameManager : MonoBehaviour
     private double AutoClicker1Damage = 0;
     private double AutoClicker2Damage = 0;
 
+    public SaveData saveData;
+    public SaveManager saveManager = SaveManager.instance;
+    public GameObject LoadButton;
+    public GameObject NewGameButton;
+
+    private void Start() {
+    }
+
+    public void SaveGame(){
+        saveData.CopyData();
+        SaveManager.instance.SaveGame(saveData);
+    }
+
+    public void LoadGame(){
+        SaveData loadedData = SaveManager.instance.LoadGame();
+        saveData.CopyFrom(loadedData);
+        SetGame(saveData);
+        LoadButton.SetActive(false);
+    }
+
+    private void Update() {
+        if(EnemyManager.instance.GetIsDead() == true){
+            SaveGame();
+        }
+    }
     void Awake() {
         instance = this;
+        saveData = new SaveData();
     }
 
     public void AddMoney(int amount){
@@ -63,6 +90,9 @@ public class GameManager : MonoBehaviour
         LvL++;
     }
 
+    public void SetLvL(int amount){
+        LvL = amount;
+    }
     public int GetLvL(){
         return LvL;
     }
@@ -87,10 +117,21 @@ public class GameManager : MonoBehaviour
         return MoneyToGive;
     }
 
+    public void SetMoneyToGive(int amount){
+        MoneyToGive = amount;
+    }
+
     public double GetBossHP(){
         return BossHP;
     }
 
+    public void SetBossHP(double amount){
+        BossHP = amount;
+    }
+
+    public void SetMaxHp(double amount){
+        MaxHp = amount;
+    }
     public void DoubleBossHP(){
         if (LvL == 10 || LvL == 20 || LvL == 30 || LvL == 40){
             BossHP = (int)(BossHP * 2);
@@ -100,6 +141,10 @@ public class GameManager : MonoBehaviour
 
     public void DoubleBossMoneyToGive(){
         BossMoneyToGive = (int)(BossMoneyToGive * 2);
+    }
+
+    public void SetBossMoneyToGive(int amount){
+        BossMoneyToGive = amount;
     }
 
     public int GetBossMoneyToGive(){
@@ -130,6 +175,18 @@ public class GameManager : MonoBehaviour
         AutoClicker2Damage = (int)(AutoClicker2Damage * 2);
     }
 
+    public void SetPlayerDamage(double amount){
+        ClickPower = amount;
+    }
+
+    public void SetAutoClicker1Damage(double amount){
+        AutoClicker1Damage = amount;
+    }
+
+    public void SetAutoClicker2Damage(double amount){
+        AutoClicker2Damage = amount;
+    }
+
     public void ResetGameManager(){
         Money = 0;
         ClickPower = 1;
@@ -144,5 +201,50 @@ public class GameManager : MonoBehaviour
         UpdateLvLText();
         UpdateStageText();
         UpdateMoneyText();
+    }
+
+        public void SetGame(SaveData save){
+        SetLvL(save.GetLvL());
+        SetDefeated(save.GetDefeated());
+
+        Money = save.GetMoney();
+        ClickManager.instance.SetPlayerDamagePrice(save.GetPlayerDamagePrice());
+        ClickManager.instance.SetPlayerPurchased(save.GetPlayerPurchased());
+
+        ClickManager.instance.SetAutoClicker1Price(save.GetAutoClicker1Price());
+        ClickManager.instance.SetAutoClicker1purchases(save.GetAutoClicker1purchases());
+
+        ClickManager.instance.SetAutoClicker2Price(save.GetAutoClicker2Price());
+        ClickManager.instance.SetAutoClicker2purchases(save.GetAutpClicker2purchases());
+
+        RebirthManager.instance.SetRebirthCount(save.GetRebirthCount());
+
+        SetPlayerDamage(save.GetClickPower());
+        SetAutoClicker1Damage(save.GetAutoClicker1Damage());
+        SetAutoClicker2Damage(save.GetAutoClicker2Damage());
+
+        SetMaxHp(save.GetMaxHp());
+        SetMoneyToGive(save.GetMoneyToGive());
+        SetBossHP(save.GetBossHP());
+        SetBossMoneyToGive(save.GetBossMoneyToGive());
+
+        UpdateLvLText();
+        UpdateStageText();
+        UpdateMoneyText();
+
+        ClickManager.instance.UpdateDpsText();
+        ClickManager.instance.upadteShopText();
+
+        NewGameButton.SetActive(false);
+        LoadButton.SetActive(false);
+        TextManager.instance.TextBox.SetActive(false);
+        ClickManager.instance.PlayerButton.SetActive(true);
+    }
+
+    public void NewGame(){
+        TextManager.instance.fillText();
+        TextManager.instance.showText(0);
+        NewGameButton.SetActive(false);
+        LoadButton.SetActive(false);
     }
 }
